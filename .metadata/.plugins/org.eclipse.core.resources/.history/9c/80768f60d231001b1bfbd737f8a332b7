@@ -1,0 +1,12 @@
+package com.livelightlabs.livelightgames.ligamarket.repository.competition;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.livelightlabs.livelightgames.ligamarket.entity.BaseEntity;
+import com.livelightlabs.livelightgames.ligamarket.entity.competition.Competition;
+
+@Repository
+public interface CompetitionRepository extends BaseEntityRepository<Competition> {
+
+}

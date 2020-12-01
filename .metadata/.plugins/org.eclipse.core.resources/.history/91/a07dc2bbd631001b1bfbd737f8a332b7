@@ -1,0 +1,129 @@
+package com.livelightlabs.livelightgames.ligamarket;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.client.RestTemplate;
+
+import com.livelightlabs.livelightgames.ligamarket.entity.competition.Competition;
+import com.livelightlabs.livelightgames.ligamarket.entity.competition.CompetitionType;
+import com.livelightlabs.livelightgames.ligamarket.model.country.Country;
+import com.livelightlabs.livelightgames.ligamarket.model.league.League;
+import com.livelightlabs.livelightgames.ligamarket.rest.league.LeagueClient;
+import com.livelightlabs.livelightgames.ligamarket.service.competition.CompetitionService;
+
+@SpringBootApplication
+@EntityScan("com.livelightlabs.livelightgames.ligamarket.entity")
+@EnableJpaRepositories
+@EnableJpaAuditing
+public class InfoCenterApplication implements CommandLineRunner {
+
+	public static void main(String[] args) {
+		SpringApplication.run(InfoCenterApplication.class, args);
+	}
+
+	@Autowired
+	private LeagueClient leagueClient;
+
+	@Autowired
+	private CompetitionService competitionService;
+
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		Country country = new Country();
+		country.setName("England");
+		List<League> sports = leagueClient.findAllByCountryForSoccer(country);
+		sports.forEach(s -> {
+			System.out.println(s.getName() + " - " + s.getAlternativeName());
+		});
+
+		List<Competition> competitions = Arrays.asList(
+				new Competition("4429", 100, "FIFA", mapOf("World Cup"), CompetitionType.LEAGUE),
+				new Competition("4498", 20, "FIFA", mapOf("Confederations Cup"), CompetitionType.LEAGUE),
+				new Competition("4503", 20, "FIFA", mapOf("Club World Cup"), CompetitionType.LEAGUE),
+				new Competition("4502", 80, "UEFA", mapOf("Euro"), CompetitionType.LEAGUE),
+				new Competition("4490", 16, "UEFA", mapOf("Nations League"), CompetitionType.LEAGUE),
+				new Competition("4480", 80, "UEFA", mapOf("Champions' League"), CompetitionType.LEAGUE),
+				new Competition("4481", 60, "UEFA", mapOf("Europa League"), CompetitionType.LEAGUE),
+				new Competition("4512", 7, "UEFA ", mapOf("Super Cup"), CompetitionType.LEAGUE),
+				new Competition("4499", 70, "CONMEBOL", mapOf("Copa America"), CompetitionType.LEAGUE),
+				new Competition("4501", 70, "CONMEBOL", mapOf("Copa Libertadores"), CompetitionType.LEAGUE),
+				new Competition("4724", 52, "CONMEBOL", mapOf("Copa Sudamericana"), CompetitionType.LEAGUE),
+				new Competition("4873", 50, "CONCACAF", mapOf("Gold Cup"), CompetitionType.LEAGUE),
+				new Competition("4721", 50, "CONCACAF", mapOf("Champions' League"), CompetitionType.LEAGUE),
+				new Competition("4739", 38, "CONCACAF", mapOf("CONCACAF League"), CompetitionType.LEAGUE),
+				new Competition("4496", 60, "CAF", mapOf("African Cup of Nations"), CompetitionType.LEAGUE),
+				new Competition("4720", 60, "CAF", mapOf("Champions' League"), CompetitionType.LEAGUE),
+				new Competition("4866", 56, "AFC", mapOf("AFC Asian Cup"), CompetitionType.LEAGUE),
+				new Competition("4719", 56, "AFC", mapOf("Champions' League"), CompetitionType.LEAGUE),
+				new Competition("4804", 42, "AFC", mapOf("AFC Cup"), CompetitionType.LEAGUE),
+				new Competition("4867", 32, "OFC", mapOf("Nations Cup"), CompetitionType.LEAGUE),
+				new Competition("4328", 64, "England", mapOf("Premier League"), CompetitionType.LEAGUE),
+				new Competition("4482", 16, "England", mapOf("FA Cup"), CompetitionType.LEAGUE),
+				new Competition("4570", 16, "England", mapOf("EFL Cup"), CompetitionType.LEAGUE),
+				new Competition("4571", 5, "England", mapOf("FA Community Shield"), CompetitionType.LEAGUE),
+				new Competition("4335", 64, "Spain", mapOf("La Liga"), CompetitionType.LEAGUE),
+				new Competition("4483", 32, "Spain", mapOf("Copa del Rey"), CompetitionType.LEAGUE),
+				new Competition("4511", 5, "Spain", mapOf("Supercopa"), CompetitionType.LEAGUE),
+				new Competition("4331", 60, "Germany", mapOf("Bundesliga"), CompetitionType.LEAGUE),
+				new Competition("4485", 34, "Germany", mapOf("DFB Pokal"), CompetitionType.LEAGUE),
+				new Competition("4332", 60, "Italy", mapOf("Serie A"), CompetitionType.LEAGUE),
+				new Competition("4506", 30, "Italy", mapOf("Coppa Italia"), CompetitionType.LEAGUE),
+				new Competition("4507", 5, "Italy", mapOf("Supercoppa"), CompetitionType.LEAGUE),
+				new Competition("4334", 58, "France", mapOf("Ligue 1"), CompetitionType.LEAGUE),
+				new Competition("4504", 16, "France", mapOf("Coupe de la Ligue"), CompetitionType.LEAGUE),
+				new Competition("4484", 16, "France", mapOf("Coupe de France"), CompetitionType.LEAGUE),
+				new Competition("4337", 56, "Netherlands", mapOf("Eredevisie"), CompetitionType.LEAGUE),
+				new Competition("4344", 56, "Portugal", mapOf("Primeira Liga"), CompetitionType.LEAGUE),
+				new Competition("4339", 54, "Turkey", mapOf("Super Lig"), CompetitionType.LEAGUE),
+				new Competition("4336", 52, "Greece", mapOf("Superleague"), CompetitionType.LEAGUE),
+				new Competition("4338", 52, "Belgium", mapOf("First Division A"), CompetitionType.LEAGUE),
+				new Competition("4355", 54, "Russia", mapOf("Premier League"), CompetitionType.LEAGUE),
+				new Competition("4675", 52, "Switzerland", mapOf("Super League"), CompetitionType.LEAGUE),
+				new Competition("4330", 52, "Scotland", mapOf("Premier League"), CompetitionType.LEAGUE),
+				new Competition("4351", 56, "Brazil", mapOf("Serie A"), CompetitionType.LEAGUE),
+				new Competition("4406", 56, "Argentina", mapOf("Primera Division"), CompetitionType.LEAGUE),
+				new Competition("4627", 54, "Chile", mapOf("Primera Division"), CompetitionType.LEAGUE),
+				new Competition("4346", 54, "United States", mapOf("MLS"), CompetitionType.LEAGUE),
+				new Competition("4350", 52, "Mexico", mapOf("Liga MX"), CompetitionType.LEAGUE),
+				new Competition("4753", 50, "Algeria", mapOf("Ligue 1"), CompetitionType.LEAGUE),
+				new Competition("4829", 50, "Egypt", mapOf("Premier League"), CompetitionType.LEAGUE),
+				new Competition("4828", 50, "Tunisia", mapOf("Ligue 1"), CompetitionType.LEAGUE),
+				new Competition("4520", 50, "Morocco", mapOf("Botola"), CompetitionType.LEAGUE),
+				new Competition("4356", 50, "Australia", mapOf("A-League"), CompetitionType.LEAGUE),
+				new Competition("4826", 46, "Bahrain", mapOf("Premier League"), CompetitionType.LEAGUE),
+				new Competition("4359", 50, "China", mapOf("Super League"), CompetitionType.LEAGUE),
+				new Competition("4742", 50, "Iran", mapOf("Persian Gulf Pro League"), CompetitionType.LEAGUE),
+				new Competition("4633", 52, "Japan", mapOf("J1 League"), CompetitionType.LEAGUE),
+				new Competition("4823", 48, "Kuwait", mapOf("Premier League"), CompetitionType.LEAGUE),
+				new Competition("4663", 50, "Qatar", mapOf("Stars League"), CompetitionType.LEAGUE),
+				new Competition("4668", 50, "Saudi Arabia", mapOf("Pro League"), CompetitionType.LEAGUE),
+				new Competition("4689", 50, "South Korea", mapOf("K League 1"), CompetitionType.LEAGUE),
+				new Competition("4347", 52, "Sweden", mapOf("Allsvenskan"), CompetitionType.LEAGUE),
+				new Competition("4678", 50, "United Arab Emirates", mapOf("Pro League"), CompetitionType.LEAGUE),
+				new Competition("4497", 54, "Colombia", mapOf("Categoria Primiera A"), CompetitionType.LEAGUE));
+
+		competitionService.saveAll(competitions);
+	}
+
+	private Map<String, String> mapOf(String string) {
+		Map<String, String> names = new HashMap<>();
+		names.put("en", string);
+		return names;
+	}
+}

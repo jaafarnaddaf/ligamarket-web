@@ -1,0 +1,5 @@
+package com.livelightlabs.livelightgames.ligamarket.rest;
+
+public class RestController {
+
+}

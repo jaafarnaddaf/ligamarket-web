@@ -1,0 +1,94 @@
+package com.livelightlabs.livelightgames.ligamarket.model.teams;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.With;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({ "idTeam", "idSoccerXML", "idAPIfootball", "intLoved", "strTeam", "strTeamShort", "strAlternate",
+		"intFormedYear", "strSport", "strLeague", "idLeague", "strLeague2", "idLeague2", "strLeague3", "idLeague3",
+		"strLeague4", "idLeague4", "strLeague5", "idLeague5", "strLeague6", "idLeague6", "strLeague7", "idLeague7",
+		"strDivision", "strManager", "strStadium", "strKeywords", "strRSS", "strStadiumThumb", "strStadiumDescription",
+		"strStadiumLocation", "intStadiumCapacity", "strWebsite", "strFacebook", "strTwitter", "strInstagram",
+		"strDescriptionEN", "strDescriptionDE", "strDescriptionFR", "strDescriptionCN", "strDescriptionIT",
+		"strDescriptionJP", "strDescriptionRU", "strDescriptionES", "strDescriptionPT", "strDescriptionSE",
+		"strDescriptionNL", "strDescriptionHU", "strDescriptionNO", "strDescriptionIL", "strDescriptionPL", "strGender",
+		"strCountry", "strTeamBadge", "strTeamJersey", "strTeamLogo", "strTeamFanart1", "strTeamFanart2",
+		"strTeamFanart3", "strTeamFanart4", "strTeamBanner", "strYoutube", "strLocked" })
+@Data
+@With
+@NoArgsConstructor
+@AllArgsConstructor
+public class Team {
+	@JsonProperty("idTeam")
+	private String id;
+	@JsonProperty("strTeam")
+	private String name;
+	@JsonProperty("strTeamShort")
+	private String abbreviation;
+	@JsonProperty("intFormedYear")
+	private Long year;
+	@JsonProperty("strSport")
+	private String sport;
+	@JsonProperty("strManager")
+	private String manager;
+	@JsonProperty("strStadium")
+	private String stadium;
+	@JsonProperty("strStadiumThumb")
+	private String stadiumImage;
+	@JsonProperty("strStadiumLocation")
+	private String stadiumLocation;
+	@JsonProperty("intStadiumCapacity")
+	private String stadiumCapacity;
+	@JsonProperty("strWebsite")
+	private String website;
+	@JsonProperty("strFacebook")
+	private String facebook;
+	@JsonProperty("strTwitter")
+	private String twitter;
+	@JsonProperty("strInstagram")
+	private String instagram;
+	@JsonProperty("strCountry")
+	private String country;
+	@JsonProperty("strTeamBadge")
+	private String badge;
+	@JsonProperty("strTeamJersey")
+	private String jersey;
+	@JsonProperty("strTeamLogo")
+	private String logo;
+	@JsonProperty("strTeamFanart1")
+	private String fanart1;
+	@JsonProperty("strTeamFanart2")
+	private String fanart2;
+	@JsonProperty("strTeamFanart3")
+	private String fanart3;
+	@JsonProperty("strTeamFanart4")
+	private String fanart4;
+	@JsonProperty("strTeamBanner")
+	private String banner;
+	@JsonProperty("strYoutube")
+	private String youtube;
+	@JsonIgnore
+	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+	@JsonAnyGetter
+	public Map<String, Object> getAdditionalProperties() {
+		return this.additionalProperties;
+	}
+
+	@JsonAnySetter
+	public void setAdditionalProperty(String name, Object value) {
+		this.additionalProperties.put(name, value);
+	}
+}

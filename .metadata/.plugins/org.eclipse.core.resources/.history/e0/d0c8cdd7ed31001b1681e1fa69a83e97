@@ -1,0 +1,27 @@
+package com.livelightlabs.livelightgames.ligamarket.entity.competition;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode.Include;
+
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+public class Standing {
+	@Include
+	private Pk pk;
+	
+	@Data
+	@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+	public static class Pk implements Serializable {
+		
+	}
+}

@@ -1,0 +1,34 @@
+package com.livelightlabs.livelightgames.ligamarket.rest.sports;
+
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.livelightlabs.livelightgames.ligamarket.model.sport.Sport;
+import com.livelightlabs.livelightgames.ligamarket.model.sport.Sports;
+import com.livelightlabs.livelightgames.ligamarket.rest.BaseClient;
+
+@Service
+public class SportsClient extends BaseClient {
+
+	public Sports getAllSports() {
+		ResponseEntity<Sports> sports = restTemplate.getForEntity(SPORTS, Sports.class);
+		return sports.getBody();
+	}
+
+	public Sport getSportByName(String name) {
+		Sports parent = getAllSports();
+		if (parent != null) {
+			List<Sport> sports = parent.getSports();
+			if (sports != null) {
+				for (Sport sport : sports) {
+					if (sport.getName().equals(name)) {
+						return sport;
+					}
+				}
+			}
+		}
+		return null;
+	}
+}

@@ -1,0 +1,47 @@
+package com.livelightlabs.livelightgames.ligamarket.rest.leagues;
+
+import java.util.List;
+
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.livelightlabs.livelightgames.ligamarket.model.league.League;
+import com.livelightlabs.livelightgames.ligamarket.rest.BaseClient;
+
+@Service
+public class LeagueClient extends BaseClient {
+
+	public List<League> getAllLeagues() {
+		ParameterizedTypeReference<List<League>> type = new ParameterizedTypeReference<List<League>>() {
+		};
+
+		ResponseEntity<List<League>> leagues = restTemplate.exchange(SPORTS, HttpMethod.GET, null, type);
+		return leagues.getBody();
+	}
+
+	public League getLeagueByName(String name) {
+		List<League> leagues = getAllLeagues();
+		if (leagues != null) {
+			for (League league : leagues) {
+				if (league.getName().equals(name)) {
+					return league;
+				}
+			}
+		}
+		return null;
+	}
+
+	public League getLeagueById(String id) {
+		List<League> leagues = getAllLeagues();
+		if (leagues != null) {
+			for (League league : leagues) {
+				if (league.getId().equals(id)) {
+					return league;
+				}
+			}
+		}
+		return null;
+	}
+}

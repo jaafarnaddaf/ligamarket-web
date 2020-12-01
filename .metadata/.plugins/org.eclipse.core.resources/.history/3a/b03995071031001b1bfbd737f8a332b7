@@ -1,0 +1,43 @@
+package com.livelightlabs.livelightgames.ligamarket;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.client.RestTemplate;
+
+import com.livelightlabs.livelightgames.ligamarket.model.sport.Sport;
+import com.livelightlabs.livelightgames.ligamarket.rest.sport.SportClient;
+
+@SpringBootApplication
+@EntityScan("com.livelightlabs.livelightgames.ligamarket.entity")
+@EnableJpaRepositories
+@EnableJpaAuditing
+public class InfoCenterApplication implements CommandLineRunner {
+
+	public static void main(String[] args) {
+		SpringApplication.run(InfoCenterApplication.class, args);
+	}
+
+	@Autowired
+	private SportClient sportClient;
+
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		List<Sport> sports = sportClient.findAll();
+		sports.forEach(s -> {
+			System.out.println(s);
+		});
+	}
+}

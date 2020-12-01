@@ -1,0 +1,13 @@
+package com.livelightlabs.livelightgames.ligamarket.repository.country;
+
+import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+
+import com.livelightlabs.livelightgames.ligamarket.entity.country.Country;
+import com.livelightlabs.livelightgames.ligamarket.repository.BaseEntityRepository;
+
+@Repository
+public interface CountryRepository extends BaseEntityRepository<Country> {
+	Optional<Country> findOneByCode(String code);
+}

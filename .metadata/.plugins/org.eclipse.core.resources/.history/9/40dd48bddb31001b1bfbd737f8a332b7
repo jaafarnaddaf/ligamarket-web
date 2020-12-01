@@ -1,0 +1,219 @@
+package com.livelightlabs.livelightgames.ligamarket.model.team;
+
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+"idTeam",
+"idSoccerXML",
+"idAPIfootball",
+"intLoved",
+"strTeam",
+"strTeamShort",
+"strAlternate",
+"intFormedYear",
+"strSport",
+"strLeague",
+"idLeague",
+"strLeague2",
+"idLeague2",
+"strLeague3",
+"idLeague3",
+"strLeague4",
+"idLeague4",
+"strLeague5",
+"idLeague5",
+"strLeague6",
+"idLeague6",
+"strLeague7",
+"idLeague7",
+"strDivision",
+"strManager",
+"strStadium",
+"strKeywords",
+"strRSS",
+"strStadiumThumb",
+"strStadiumDescription",
+"strStadiumLocation",
+"intStadiumCapacity",
+"strWebsite",
+"strFacebook",
+"strTwitter",
+"strInstagram",
+"strDescriptionEN",
+"strDescriptionDE",
+"strDescriptionFR",
+"strDescriptionCN",
+"strDescriptionIT",
+"strDescriptionJP",
+"strDescriptionRU",
+"strDescriptionES",
+"strDescriptionPT",
+"strDescriptionSE",
+"strDescriptionNL",
+"strDescriptionHU",
+"strDescriptionNO",
+"strDescriptionIL",
+"strDescriptionPL",
+"strGender",
+"strCountry",
+"strTeamBadge",
+"strTeamJersey",
+"strTeamLogo",
+"strTeamFanart1",
+"strTeamFanart2",
+"strTeamFanart3",
+"strTeamFanart4",
+"strTeamBanner",
+"strYoutube",
+"strLocked"
+})
+public class Team {
+
+@JsonProperty("idTeam")
+public String idTeam;
+@JsonProperty("idSoccerXML")
+public String idSoccerXML;
+@JsonProperty("idAPIfootball")
+public String idAPIfootball;
+@JsonProperty("intLoved")
+public String intLoved;
+@JsonProperty("strTeam")
+public String strTeam;
+@JsonProperty("strTeamShort")
+public Object strTeamShort;
+@JsonProperty("strAlternate")
+public String strAlternate;
+@JsonProperty("intFormedYear")
+public String intFormedYear;
+@JsonProperty("strSport")
+public String strSport;
+@JsonProperty("strLeague")
+public String strLeague;
+@JsonProperty("idLeague")
+public String idLeague;
+@JsonProperty("strLeague2")
+public String strLeague2;
+@JsonProperty("idLeague2")
+public String idLeague2;
+@JsonProperty("strLeague3")
+public String strLeague3;
+@JsonProperty("idLeague3")
+public String idLeague3;
+@JsonProperty("strLeague4")
+public String strLeague4;
+@JsonProperty("idLeague4")
+public Object idLeague4;
+@JsonProperty("strLeague5")
+public String strLeague5;
+@JsonProperty("idLeague5")
+public Object idLeague5;
+@JsonProperty("strLeague6")
+public Object strLeague6;
+@JsonProperty("idLeague6")
+public Object idLeague6;
+@JsonProperty("strLeague7")
+public Object strLeague7;
+@JsonProperty("idLeague7")
+public Object idLeague7;
+@JsonProperty("strDivision")
+public Object strDivision;
+@JsonProperty("strManager")
+public String strManager;
+@JsonProperty("strStadium")
+public String strStadium;
+@JsonProperty("strKeywords")
+public String strKeywords;
+@JsonProperty("strRSS")
+public String strRSS;
+@JsonProperty("strStadiumThumb")
+public String strStadiumThumb;
+@JsonProperty("strStadiumDescription")
+public String strStadiumDescription;
+@JsonProperty("strStadiumLocation")
+public String strStadiumLocation;
+@JsonProperty("intStadiumCapacity")
+public String intStadiumCapacity;
+@JsonProperty("strWebsite")
+public String strWebsite;
+@JsonProperty("strFacebook")
+public String strFacebook;
+@JsonProperty("strTwitter")
+public String strTwitter;
+@JsonProperty("strInstagram")
+public String strInstagram;
+@JsonProperty("strDescriptionEN")
+public String strDescriptionEN;
+@JsonProperty("strDescriptionDE")
+public Object strDescriptionDE;
+@JsonProperty("strDescriptionFR")
+public Object strDescriptionFR;
+@JsonProperty("strDescriptionCN")
+public Object strDescriptionCN;
+@JsonProperty("strDescriptionIT")
+public Object strDescriptionIT;
+@JsonProperty("strDescriptionJP")
+public Object strDescriptionJP;
+@JsonProperty("strDescriptionRU")
+public Object strDescriptionRU;
+@JsonProperty("strDescriptionES")
+public Object strDescriptionES;
+@JsonProperty("strDescriptionPT")
+public Object strDescriptionPT;
+@JsonProperty("strDescriptionSE")
+public Object strDescriptionSE;
+@JsonProperty("strDescriptionNL")
+public Object strDescriptionNL;
+@JsonProperty("strDescriptionHU")
+public Object strDescriptionHU;
+@JsonProperty("strDescriptionNO")
+public Object strDescriptionNO;
+@JsonProperty("strDescriptionIL")
+public Object strDescriptionIL;
+@JsonProperty("strDescriptionPL")
+public Object strDescriptionPL;
+@JsonProperty("strGender")
+public String strGender;
+@JsonProperty("strCountry")
+public String strCountry;
+@JsonProperty("strTeamBadge")
+public String strTeamBadge;
+@JsonProperty("strTeamJersey")
+public String strTeamJersey;
+@JsonProperty("strTeamLogo")
+public String strTeamLogo;
+@JsonProperty("strTeamFanart1")
+public String strTeamFanart1;
+@JsonProperty("strTeamFanart2")
+public String strTeamFanart2;
+@JsonProperty("strTeamFanart3")
+public String strTeamFanart3;
+@JsonProperty("strTeamFanart4")
+public String strTeamFanart4;
+@JsonProperty("strTeamBanner")
+public String strTeamBanner;
+@JsonProperty("strYoutube")
+public String strYoutube;
+@JsonProperty("strLocked")
+public String strLocked;
+@JsonIgnore
+private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+@JsonAnyGetter
+public Map<String, Object> getAdditionalProperties() {
+return this.additionalProperties;
+}
+
+@JsonAnySetter
+public void setAdditionalProperty(String name, Object value) {
+this.additionalProperties.put(name, value);
+}
+
+}

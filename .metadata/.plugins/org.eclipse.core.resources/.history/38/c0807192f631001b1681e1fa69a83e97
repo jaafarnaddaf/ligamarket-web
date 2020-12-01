@@ -1,0 +1,231 @@
+package com.livelightlabs.livelightgames.ligamarket.data;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.livelightlabs.livelightgames.ligamarket.entity.competition.Competition;
+import com.livelightlabs.livelightgames.ligamarket.entity.competition.CompetitionLevel;
+import com.livelightlabs.livelightgames.ligamarket.entity.competition.CompetitionType;
+import com.livelightlabs.livelightgames.ligamarket.entity.competition.Standing;
+import com.livelightlabs.livelightgames.ligamarket.entity.country.Country;
+import com.livelightlabs.livelightgames.ligamarket.helper.CollectionHelper;
+import com.livelightlabs.livelightgames.ligamarket.helper.EntityHelper;
+import com.livelightlabs.livelightgames.ligamarket.model.team.Team;
+import com.livelightlabs.livelightgames.ligamarket.repository.competition.StandingRepository;
+import com.livelightlabs.livelightgames.ligamarket.rest.team.TeamClient;
+import com.livelightlabs.livelightgames.ligamarket.service.competition.CompetitionService;
+import com.livelightlabs.livelightgames.ligamarket.service.country.CountryService;
+import com.livelightlabs.livelightgames.ligamarket.service.team.TeamService;
+
+@Component
+public class InitialData {
+
+	@Autowired
+	private TeamClient teamClient;
+
+	@Autowired
+	private CompetitionService competitionService;
+
+	@Autowired
+	private CountryService countryService;
+
+	@Autowired
+	private TeamService teamService;
+
+	@Autowired
+	private StandingRepository standingRepository;
+
+	@PostConstruct
+	public void init() throws Exception {
+		if (competitionService.count() == 0) {
+//			createTeams(createCompetitions());
+		}
+		createStandings();
+	}
+
+	private void createStandings() {
+		long season = 2020;
+//		competitionService.findAllByType(CompetitionType.LEAGUE).forEach(c -> {
+		Competition c = competitionService.findAllByType(CompetitionType.LEAGUE).get(0);
+		System.out.println(c.getNames());
+		int dry = 0;
+		int finished = 0;
+		while (dry < 5 && finished < 5) {
+			try {
+				List<Team> teams = teamClient.findStandingsByCompetitionAndSeason(c, (season - 1) + "-" + season);
+				for (int i = 0; i < teams.size(); i++) {
+					Standing standing = new Standing(c, teamService.findOneByApiId(teams.get(i).getId()), season,
+							i + 1);
+					standingRepository.save(standing);
+				}
+				finished++;
+				continue;
+			} catch (Exception e) {
+				e.printStackTrace();
+				break;
+			}
+			// dry++;
+		}
+//		});
+	}
+
+	private void createTeams(List<Competition> competitions) {
+		for (Competition competition : competitions) {
+			try {
+				List<Team> teams = teamClient.findAllByCompetition(competition);
+				System.out.println();
+				for (Team team : teams) {
+					Country country = countryService.findOneByCode(team.getCountry())
+							.orElseGet(() -> countryService.save(EntityHelper.toCountry(team.getCountry())));
+
+					com.livelightlabs.livelightgames.ligamarket.entity.team.Team t = teamService
+							.findOneByApiId(team.getId())
+							.orElseGet(() -> teamService.save(EntityHelper.toTeam(team, country)));
+					System.out.print(t.getNames().get("en") + " - ");
+				}
+				System.out.println();
+			} catch (Exception e) {
+				System.out.println(competition.getApiId());
+			}
+		}
+	}
+
+	private List<Competition> createCompetitions() {
+		List<Competition> competitions = Arrays.asList(
+				new Competition("4429", 100, "FIFA", CompetitionType.CUP, CompetitionLevel.GLOBAL,
+						CollectionHelper.mapOf("en", "World Cup")),
+				new Competition("4498", 20, "FIFA", CompetitionType.CUP, CompetitionLevel.GLOBAL,
+						CollectionHelper.mapOf("en", "Confederations Cup")),
+				new Competition("4503", 20, "FIFA", CompetitionType.KNOCKOUT, CompetitionLevel.GLOBAL,
+						CollectionHelper.mapOf("en", "Club World Cup")),
+				new Competition("4502", 80, "UEFA", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Euro")),
+				new Competition("4490", 16, "UEFA", CompetitionType.QUALIFICATIONS, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Nations League")),
+				new Competition("4480", 80, "UEFA", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Champions' League")),
+				new Competition("4481", 60, "UEFA", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Europa League")),
+				new Competition("4512", 7, "UEFA ", CompetitionType.KNOCKOUT, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Super Cup")),
+				new Competition("4499", 70, "CONMEBOL", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Copa America")),
+				new Competition("4501", 70, "CONMEBOL", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Copa Libertadores")),
+				new Competition("4724", 52, "CONMEBOL", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Copa Sudamericana")),
+				new Competition("4873", 50, "CONCACAF", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Gold Cup")),
+				new Competition("4721", 50, "CONCACAF", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Champions' League")),
+				new Competition("4739", 38, "CONCACAF", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "CONCACAF League")),
+				new Competition("4496", 60, "CAF", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "African Cup of Nations")),
+				new Competition("4720", 60, "CAF", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Champions' League")),
+				new Competition("4866", 56, "AFC", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "AFC Asian Cup")),
+				new Competition("4719", 56, "AFC", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Champions' League")),
+				new Competition("4804", 42, "AFC", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "AFC Cup")),
+				new Competition("4867", 32, "OFC", CompetitionType.CUP, CompetitionLevel.CONTINENTAL,
+						CollectionHelper.mapOf("en", "Nations Cup")),
+				new Competition("4328", 64, "England", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Premier League")),
+				new Competition("4482", 16, "England", CompetitionType.KNOCKOUT, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "FA Cup")),
+				new Competition("4570", 16, "England", CompetitionType.KNOCKOUT, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "EFL Cup")),
+				new Competition("4571", 5, "England", CompetitionType.KNOCKOUT, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "FA Community Shield")),
+				new Competition("4335", 64, "Spain", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "La Liga")),
+				new Competition("4483", 32, "Spain", CompetitionType.KNOCKOUT, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Copa del Rey")),
+				new Competition("4511", 5, "Spain", CompetitionType.KNOCKOUT, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Supercopa")),
+				new Competition("4331", 60, "Germany", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Bundesliga")),
+				new Competition("4485", 34, "Germany", CompetitionType.KNOCKOUT, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "DFB Pokal")),
+				new Competition("4332", 60, "Italy", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Serie A")),
+				new Competition("4506", 30, "Italy", CompetitionType.KNOCKOUT, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Coppa Italia")),
+				new Competition("4507", 5, "Italy", CompetitionType.KNOCKOUT, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Supercoppa")),
+				new Competition("4334", 58, "France", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Ligue 1")),
+				new Competition("4504", 16, "France", CompetitionType.KNOCKOUT, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Coupe de la Ligue")),
+				new Competition("4484", 16, "France", CompetitionType.KNOCKOUT, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Coupe de France")),
+				new Competition("4337", 56, "Netherlands", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Eredevisie")),
+				new Competition("4344", 56, "Portugal", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Primeira Liga")),
+				new Competition("4339", 54, "Turkey", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Super Lig")),
+				new Competition("4336", 52, "Greece", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Superleague")),
+				new Competition("4338", 52, "Belgium", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "First Division A")),
+				new Competition("4355", 54, "Russia", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Premier League")),
+				new Competition("4675", 52, "Switzerland", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Super League")),
+				new Competition("4330", 52, "Scotland", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Premier League")),
+				new Competition("4351", 56, "Brazil", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Serie A")),
+				new Competition("4406", 56, "Argentina", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Primera Division")),
+				new Competition("4627", 54, "Chile", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Primera Division")),
+				new Competition("4346", 54, "United States", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "MLS")),
+				new Competition("4350", 52, "Mexico", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Liga MX")),
+				new Competition("4753", 50, "Algeria", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Ligue 1")),
+				new Competition("4829", 50, "Egypt", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Premier League")),
+				new Competition("4828", 50, "Tunisia", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Ligue 1")),
+				new Competition("4520", 50, "Morocco", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Botola")),
+				new Competition("4356", 50, "Australia", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "A-League")),
+				new Competition("4826", 46, "Bahrain", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Premier League")),
+				new Competition("4359", 50, "China", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Super League")),
+				new Competition("4742", 50, "Iran", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Persian Gulf Pro League")),
+				new Competition("4633", 52, "Japan", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "J1 League")),
+				new Competition("4823", 48, "Kuwait", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Premier League")),
+				new Competition("4663", 50, "Qatar", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Stars League")),
+				new Competition("4668", 50, "Saudi Arabia", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Pro League")),
+				new Competition("4689", 50, "South Korea", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "K League 1")),
+				new Competition("4347", 52, "Sweden", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Allsvenskan")),
+				new Competition("4678", 50, "United Arab Emirates", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Pro League")),
+				new Competition("4497", 54, "Colombia", CompetitionType.LEAGUE, CompetitionLevel.NATIONAL,
+						CollectionHelper.mapOf("en", "Categoria Primiera A")));
+
+		return competitionService.saveAll(competitions);
+	}
+}

@@ -1,0 +1,45 @@
+package com.livelightlabs.livelightgames.ligamarket.entity.team;
+
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
+import com.livelightlabs.livelightgames.ligamarket.entity.BaseEntity;
+import com.livelightlabs.livelightgames.ligamarket.entity.country.Country;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+public class Team extends BaseEntity {
+	private String abbreviation;
+	private String apiId;
+	private String badge;
+	private String banner;
+	@ManyToOne
+	private Country country;
+	private String facebook;
+	private String fanart1;
+	private String fanart2;
+	private String fanart3;
+	private String fanart4;
+	private String instagram;
+	private String jersey;
+	private String logo;
+	private String manager;
+	private String name;
+	private String sport;
+	private String stadium;
+	private String stadiumCapacity;
+	private String stadiumImage;
+	private String stadiumLocation;
+	private String twitter;
+	private String website;
+	private Long year;
+	private String youtube;
+}

@@ -1,0 +1,27 @@
+package com.livelightlabs.livelightgames.ligamarket.rest.team;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.livelightlabs.livelightgames.ligamarket.model.country.Country;
+import com.livelightlabs.livelightgames.ligamarket.model.league.League;
+import com.livelightlabs.livelightgames.ligamarket.model.league.Leagues;
+import com.livelightlabs.livelightgames.ligamarket.model.sport.Sport;
+import com.livelightlabs.livelightgames.ligamarket.model.teams.Team;
+import com.livelightlabs.livelightgames.ligamarket.model.teams.Teams;
+import com.livelightlabs.livelightgames.ligamarket.rest.BaseClient;
+
+@Service
+public class TeamClient extends BaseClient {
+
+	public List<Team> findAll() {
+		ResponseEntity<Teams> leagues = restTemplate.getForEntity(LEAGUES, Teams.class);
+		if (leagues.getBody() != null) {
+			return leagues.getBody().getTeams();
+		}
+		return new ArrayList<>();
+	}
+}

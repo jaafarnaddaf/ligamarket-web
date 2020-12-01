@@ -1,0 +1,22 @@
+1606610596873	Rename package 'com.livelightlabs.livelightgames.ligamarket.rest.teams'
+1606611049841	Copy package
+1606611275727	Delete element
+1606614084821	Extract method 'createCompetitions'
+1606614698505	Rename package 'com.livelightlabs.livelightgames.ligamarket.model.teams'
+1606615358611	Rename type 'InitialDataConfiguration'
+1606616222429	Copy compilation unit
+1606616300565	Delete element
+1606616346303	Copy compilation unit
+1606616370321	Copy compilation unit
+1606616417101	Copy compilation unit
+1606616441100	Copy compilation unit
+1606617117326	Delete element
+1606617852012	Rename method 'findByCode'
+1606622345607	Extract local variable 'team'
+1606623145560	Rename method 'createStandings'
+1606625284617	Copy compilation unit
+1606625384044	Copy compilation unit
+1606627175353	Extract local variable 'pk'
+1606627184228	Extract local variable 'competition'
+1606720053267	Extract method 'extracted'
+1606720069741	Rename method 'extracted'

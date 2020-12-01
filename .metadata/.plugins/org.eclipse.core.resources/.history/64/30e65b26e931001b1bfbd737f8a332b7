@@ -1,0 +1,12 @@
+package com.livelightlabs.livelightgames.ligamarket.helper;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class EntityHelper {
+	public static <S, T> Map<S, T> mapOf(S key, T string) {
+		Map<S, T> map = new HashMap<>();
+		map.put(key, string);
+		return map;
+	}
+}

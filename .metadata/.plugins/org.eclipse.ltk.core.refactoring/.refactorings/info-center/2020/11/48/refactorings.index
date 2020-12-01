@@ -1,0 +1,17 @@
+1606518269574	Move compilation units
+1606520897529	Delete element
+1606520982185	Delete element
+1606521036998	Copy compilation unit
+1606521282192	Copy compilation unit
+1606521516215	Delete element
+1606521529384	Copy compilation unit
+1606521590499	Rename package 'com.livelightlabs.livelightgames.ligamarket.rest.sports'
+1606522280817	Rename method 'getAllSports'
+1606522301789	Rename method 'getSportByName'
+1606522329106	Rename method 'getSportById'
+1606522336977	Rename method 'getAll'
+1606522383968	Rename method 'getAllLeagues'
+1606528551277	Copy compilation unit
+1606606064589	Copy compilation unit
+1606606395595	Rename type 'LeagueType'
+1606606474117	Copy compilation unit

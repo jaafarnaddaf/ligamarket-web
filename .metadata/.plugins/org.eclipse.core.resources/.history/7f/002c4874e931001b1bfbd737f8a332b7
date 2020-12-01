@@ -1,0 +1,11 @@
+package com.livelightlabs.livelightgames.ligamarket.repository.country;
+
+import org.springframework.stereotype.Repository;
+
+import com.livelightlabs.livelightgames.ligamarket.entity.country.Country;
+import com.livelightlabs.livelightgames.ligamarket.repository.BaseEntityRepository;
+
+@Repository
+public interface TeamRepository extends BaseEntityRepository<Country> {
+
+}

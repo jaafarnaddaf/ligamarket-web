@@ -1,0 +1,27 @@
+package com.livelightlabs.livelightgames.ligamarket.entity.competition;
+
+import java.time.Instant;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import lombok.Data;
+
+@Data
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Competition extends BaseEntity {
+	@CreatedDate
+	private Instant creationDate;
+
+	@Id
+	private Long id;
+
+	@LastModifiedDate
+	private Instant modificationDate;
+}

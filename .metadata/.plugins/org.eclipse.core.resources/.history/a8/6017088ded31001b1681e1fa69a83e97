@@ -1,0 +1,7 @@
+package com.livelightlabs.livelightgames.ligamarket.entity.competition;
+
+import com.livelightlabs.livelightgames.ligamarket.entity.BaseEntity;
+
+public class Standing extends BaseEntity {
+
+}

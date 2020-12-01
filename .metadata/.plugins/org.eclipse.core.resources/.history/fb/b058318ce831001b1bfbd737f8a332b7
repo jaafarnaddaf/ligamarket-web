@@ -1,0 +1,12 @@
+package com.livelightlabs.livelightgames.ligamarket.helper;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class CollectionHelper {
+	private Map<String, String> mapOf(String string) {
+		Map<String, String> names = new HashMap<>();
+		names.put("en", string);
+		return names;
+	}
+}

@@ -1,0 +1,14 @@
+package com.livelightlabs.livelightgames.ligamarket.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
+
+public abstract class BaseClient {
+
+	@Autowired
+	public RestTemplate restTemplate;
+
+	public final static String API_KEY = "4013017";
+	public final static String BASE = "https://www.thesportsdb.com/api/v1/json/";
+	public final static String SPORTS = "/all_sports.php";
+}

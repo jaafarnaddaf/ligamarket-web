@@ -1,0 +1,13 @@
+package com.livelightlabs.livelightgames.ligamarket.service.competition;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.livelightlabs.livelightgames.ligamarket.entity.competition.Competition;
+import com.livelightlabs.livelightgames.ligamarket.repository.competition.CompetitionRepository;
+import com.livelightlabs.livelightgames.ligamarket.service.BaseEntityService;
+
+public class CompetitionService extends BaseEntityService<Competition> {
+
+	@Autowired
+	private CompetitionRepository repository;
+}

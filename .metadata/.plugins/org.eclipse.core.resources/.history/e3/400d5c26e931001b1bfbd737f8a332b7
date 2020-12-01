@@ -1,0 +1,12 @@
+package com.livelightlabs.livelightgames.ligamarket.helper;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.livelightlabs.livelightgames.ligamarket.entity.country.Country;
+
+public class EntityHelper {
+	public static Country toCountry(String name) {
+		Country country = new Country(code, names, federation)
+	}
+}

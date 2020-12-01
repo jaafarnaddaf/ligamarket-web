@@ -1,0 +1,5 @@
+package com.livelightlabs.livelightgames.ligamarket.entity;
+
+public class BaseEntity {
+
+}

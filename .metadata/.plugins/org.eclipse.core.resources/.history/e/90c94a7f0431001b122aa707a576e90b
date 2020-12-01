@@ -1,0 +1,83 @@
+package com.livelightlabs.livelightgames.ligamarket.model;
+
+import java.util.HashMap;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+"idSport",
+"strSport",
+"strFormat",
+"strSportThumb",
+"strSportThumbGreen",
+"strSportDescription"
+})
+public class Sport {
+
+@JsonProperty("idSport")
+public String idSport;
+@JsonProperty("strSport")
+public String strSport;
+@JsonProperty("strFormat")
+public String strFormat;
+@JsonProperty("strSportThumb")
+public String strSportThumb;
+@JsonProperty("strSportThumbGreen")
+public String strSportThumbGreen;
+@JsonProperty("strSportDescription")
+public String strSportDescription;
+@JsonIgnore
+private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+public Sport withIdSport(String idSport) {
+this.idSport = idSport;
+return this;
+}
+
+public Sport withStrSport(String strSport) {
+this.strSport = strSport;
+return this;
+}
+
+public Sport withStrFormat(String strFormat) {
+this.strFormat = strFormat;
+return this;
+}
+
+public Sport withStrSportThumb(String strSportThumb) {
+this.strSportThumb = strSportThumb;
+return this;
+}
+
+public Sport withStrSportThumbGreen(String strSportThumbGreen) {
+this.strSportThumbGreen = strSportThumbGreen;
+return this;
+}
+
+public Sport withStrSportDescription(String strSportDescription) {
+this.strSportDescription = strSportDescription;
+return this;
+}
+
+@JsonAnyGetter
+public Map<String, Object> getAdditionalProperties() {
+return this.additionalProperties;
+}
+
+@JsonAnySetter
+public void setAdditionalProperty(String name, Object value) {
+this.additionalProperties.put(name, value);
+}
+
+public Sport withAdditionalProperty(String name, Object value) {
+this.additionalProperties.put(name, value);
+return this;
+}
+
+}
